@@ -2,88 +2,136 @@ package SimpleTextAdventureGame;
 
 import java.util.Scanner;
 
-public class Zones {
+@SuppressWarnings("Switch")
+public class Zones extends Player{
 
     Quests quests = new Quests();
+    Triggers triggers = new Triggers();
 
 
-    private int firstTimeInTavern = 0;
-    private int firstTimeInSilverhelm = 0;
-
-    public void setFirstTimeInTavern(int firstTimeInTavern) {
-        this.firstTimeInTavern = firstTimeInTavern;
-    }
-
-    public void setFirstTimeInSilverhelm(int firstTimeInSilverhelm) {this.firstTimeInSilverhelm = firstTimeInSilverhelm;
-    }
-
-    public int getFirstTimeInTavern() {
-        return firstTimeInTavern;
-    }
-
-    public int getFirstTimeInSilverhelm() {
-        return firstTimeInSilverhelm;
-    }
+    ///////////////////////////////////ZONES//////////////////////////////////////
 
     public void Westshell() {
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println("-------------------------");
         System.out.println("You are in the town of Westshell. A sprawling town located\n" +
                 "on a beach.");
-        System.out.println("What do you want to do?");
         System.out.println("1. *Enter the tavern*");
         System.out.println("2. *Talk to a guard*");
         System.out.println("3. *Leave the town*");
         String choice = scanner.nextLine();
 
+        while (true) {
+            if (!choice.equals("1") && !choice.equals("2") && !choice.equals("3")) {
+                System.out.println("---Unrecognized choice---");
+                choice = scanner.nextLine();
+            } else {
+                switch (choice) {
+                    case ("1"):
+                        WestshellTavern();
+                        break;
+                    case ("2"):
+                        WestshellGuardDialogue();
+                        break;
+                    case ("3"):
+                        WestshellOutside();
+                        break;
+                }
+            }
 
-        switch (choice) {
-            case ("1"):
-                WestshellTavern();
-                break;
-            case ("2"):
-                WestshellGuardDialogue();
-                break;
-            case ("3"):
-                WestshellOutside();
-                break;
         }
     }
 
     public void WestshellTavern() {
         Scanner scanner = new Scanner(System.in);
 
-        if (getFirstTimeInTavern() == 0) {
+        if (triggers.getWestshellTavernFirstTime() == 0) {
             System.out.println("You enter the Westshell tavern where the bartender greets you.");
             System.out.println("-------------------------");
             System.out.println("'Hello young adventurer! Haven't seen your face around here so you must be new. Welcome to Westshell!'");
             System.out.println("'My name is Durgstenbof but you can call me Durg. So what can I help you with?'");
             System.out.println("-------------------------");
-            setFirstTimeInTavern(1);
+            triggers.setWestshellTavernFirstTime(1);
+        }else {
+            System.out.println("-------------------------");
+            System.out.println("'Hello adventurer!");
+            System.out.println("-------------------------");
         }
-        System.out.println("1. *Ask for rumors*");
-        System.out.println("2. *Rest*");
-        System.out.println("3. *Leave*");
+            System.out.println("1. *Ask for rumors*");
+            System.out.println("2. *Rest*");
+            System.out.println("3. *Leave*");
 
         String choice = scanner.nextLine();
 
-        switch (choice) {
-            case ("1"):
-                System.out.println("-------------------------");
-                System.out.println("'There's a town far to the north where ghosts and banshees are believed to live there.'");
-                System.out.println("'Each adventurer that tried to go there hasn't returned.'");
-                System.out.println("''Now now. Don't fool yourself that you ARE the hero *sniff*.");
-                System.out.println("'You can go there but enter at your own risk and don't blame me in Heaven for sending you there. Hahah!'");
-                System.out.println("-------------------------");
-                WestshellTavern();
-                break;
-            case ("2"):
-                //TODO Add resting mechanic which restores HP for gold coins
-                WestshellTavern();
-                break;
-            case ("3"):
-                Westshell();
-                break;
+        while (true) {
+            if (!choice.equals("1") && !choice.equals("2") && !choice.equals("3")) {
+                System.out.println("---Unrecognized Choice---");
+                choice = scanner.nextLine();
+            } else {
+                switch (choice) {
+                    case ("1"):
+                        System.out.println("-------------------------");
+                        System.out.println("'There's a town far to the north where ghosts and banshees are believed to live there.'");
+                        System.out.println("'Each adventurer that tried to go there hasn't returned.'");
+                        System.out.println("''Now now. Don't fool yourself that you ARE the hero *sniff*.");
+                        System.out.println("'You can go there but enter at your own risk and don't blame me in Heaven for sending you there. Hahah!'");
+                        WestshellTavern();
+                        break;
+                    case ("2"):
+                        //TODO Fix Unrecognized Choice Leaving The Loop
+
+                        System.out.println("-------------------------");
+                        System.out.println("'That'll cost you 10 gold adventurer.'");
+                        System.out.println("1. *Pay 10 gold*");
+                        System.out.println("2. *Leave*");
+                        choice = scanner.nextLine();
+                        if (getPlayerGold() >= 10){
+                            if (!choice.equals("1") && !choice.equals("2")){
+                                System.out.println("---Unrecognized Choice---");
+                                choice = scanner.nextLine();
+                            }else {
+                                switch (choice){
+                                    case ("1"):
+                                        System.out.println("-------------------------");
+                                        System.out.println("""
+                                                Durgstenbof shows you the way up to the bedrooms. You enter your room,
+                                                the air is clean, the sheets are clean and you lay down. Soon you feel
+                                                your eyelids heavier and heavier. Before you realise you were already asleep.""");
+                                        setPlayerCurrentHP(getPlayerMaxHP());
+                                        setPlayerGold(getPlayerGold() - 10);
+                                        System.out.printf("HP Restored: %d/%d\n", getPlayerCurrentHP(), getPlayerMaxHP());
+                                        System.out.printf("Remaining Gold: %d\n", getPlayerGold());
+                                        WestshellTavern();
+                                        break;
+                                    case("2"):
+                                        WestshellTavern();
+                                        break;
+                                }
+                            }
+                        }else {
+                            if (!choice.equals("1") && !choice.equals("2")){
+                                System.out.println("---Unrecognized Choice---");
+                                choice = scanner.nextLine();
+                            }else {
+                                switch (choice){
+                                    case("1"):
+                                        System.out.println("-------------------------");
+                                        System.out.println("'You don't have enough gold friend.'");
+                                        System.out.println("-------------------------");
+                                        WestshellTavern();
+                                        break;
+                                    case("2"):
+                                        WestshellTavern();
+                                        break;
+                                }
+                            }
+                        }
+                    case ("3"):
+                        Westshell();
+                        break;
+                }
+            }
+
         }
     }
 
@@ -101,7 +149,7 @@ public class Zones {
         String choice = scanner.nextLine();
         switch (choice) {
             case ("1"): // *Ask about rumors*
-                if (quests.questWispsRunningRampant == 0) {
+                if (quests.getQuestWispsRunningRampant() == 0) {
                     System.out.println("-------------------------");
                     System.out.println("'There are fairy-like insects that live in the forest next to us.'");
                     System.out.println("'We call them wisps. They are peaceful creatures but recently have become aggressive.'");
@@ -119,7 +167,7 @@ public class Zones {
                             System.out.println("Quest 'Wisps running rampant!' added to the quest log.");
                             System.out.println("-------------------------");
                             quests.questLog.add("'Wisps running rampant!'");
-                            quests.questWispsRunningRampant++;
+                            quests.setQuestWispsRunningRampant(1);
                             Westshell();
                             break;
                         case ("2"):
@@ -129,7 +177,7 @@ public class Zones {
                             WestshellGuardDialogue();
                             break;
                     }
-                } else if (quests.questWispsRunningRampant == 1) {
+                } else if (quests.getQuestWispsRunningRampant() == 1) {
                     System.out.println("-------------------------");
                     System.out.println("'You're back. Did you discover anything?'");
                     System.out.println("-------------------------");
@@ -147,14 +195,14 @@ public class Zones {
                             System.out.println("Reward: PLACEHOLDER gold coins.\n" +
                                     "    XP: PLACEHOLDER XP.");
                             System.out.println("-------------------------");
-                            quests.questWispsRunningRampant++;
+                            quests.setQuestWispsRunningRampant(2);
                             WestshellGuardDialogue();
                             break;
                         case ("2"):
                             WestshellGuardDialogue();
                             break;
                     }
-                } else if (quests.questWispsRunningRampant == 2) {
+                } else if (quests.getQuestWispsRunningRampant() == 2) {
                     System.out.println("-------------------------");
                     System.out.println("'Haven't heard anything lately.'");
                     System.out.println("-------------------------");
@@ -168,12 +216,14 @@ public class Zones {
                 System.out.println("'When you leave town you take the road north. Keep walking and you'll\n" +
                         "reach Silverhelm. Do say hi to '");
                 System.out.println("-------------------------");
+                Westshell();
                 break;
             case ("3"): // *Ask where you can rest*
                 System.out.println("-------------------------");
                 System.out.println("'You can go to the tavern right up ahead. Durgstenbof is the bartender there.'\n" +
                         "'He can offer you a room to rest for a coin or two.'");
                 System.out.println("-------------------------");
+                Westshell();
                 break;
             case ("4"): // *Leave*
                 Westshell();
@@ -183,7 +233,7 @@ public class Zones {
 
     public void WestshellOutside() {
         Scanner scanner = new Scanner(System.in);
-        if (quests.questWispsRunningRampant == 2) {
+        if (quests.getQuestWispsRunningRampant() == 2) {
             System.out.println("-------------------------");
             System.out.println("""
                     You're at the gates of Westshell. To the north you see a dense forest.
@@ -246,43 +296,97 @@ public class Zones {
     }
 
     public void MistyForest() {
-        if (quests.questWispsRunningRampant == 0){
+        Scanner scanner = new Scanner(System.in);
+        if (quests.getQuestWispsRunningRampant() == 0) {
             System.out.println("-------------------------");
             System.out.println("""
                     You enter the Misty forest.
-                    You see fairy-like insects roaming around and terrorizing the wildlife.
-                    """);
+                    You see fairy-like insects roaming around and terrorizing the wildlife.""");
             System.out.println("-------------------------");
-        } else if (quests.questWispsRunningRampant == 1) {
+            System.out.println("""
+                    1. *Look around*
+                    2. *Go back to Westshell*
+                    """);
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case ("1"):
+                    if (quests.getQuestWispsRunningRampant() == 2){
+                        System.out.println("-------------------------");
+                        System.out.println("You see the wisps dancing, tumbling around and having fun\n" +
+                                "with the wildlife.");
+                    }else {
+                        System.out.println("-------------------------");
+                        System.out.println("""
+                                You see nothing of significance, although you can hear a low toned rumble
+                                but you can't figure out where it comes from.""");
+                    }
+                    MistyForest();
+                    break;
+                case ("2"):
+                    WestshellOutside();
+                    break;
+            }
+        } else if (quests.getQuestWispsRunningRampant() == 1) {
             System.out.println("-------------------------");
             System.out.println("""
                     You enter the Misty forest. You see the wisps terrorizing the wildlife.
                     In the distance, deep into the forest, you see a bright purple light shining
-                    through the gaps between trees.
-                    """);
+                    through the gaps between trees.""");
             System.out.println("-------------------------");
-        }else {
+            System.out.println("""
+                    1. *Look around*
+                    2. *Head into the forest*
+                    3. *Go back to Westshell*
+                    """);
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case ("1"):
+                    System.out.println("""
+                            You see nothing of significance, although you can hear a low toned rumble
+                            but you can't figure out where it comes from.""");
+                    MistyForest();
+                    break;
+                case ("2"):
+                    MistyForestInterior1();
+                    break;
+                case ("3"):
+                    WestshellOutside();
+                    break;
+            }
+        } else {
             System.out.println("-------------------------");
             System.out.println("""
                     You enter the Misty forest.
-                    Cheerful wisps dance around you as you walk around.
-                    """);
+                    Cheerful wisps dance around you as you walk around.""");
             System.out.println("-------------------------");
+            System.out.println("""
+                    1. *Look around*
+                    2. *Head into the forest*
+                    3. *Go back to Westshell*
+                    """);
         }
 
 
     }
 
+    public void MistyForestInterior1() {
+
+    }
+
+    public void MistyForestInterior2() {
+
+    }
+
+    public void MistyForestInterior3() {
+
+    }
+
     public void SilverhelmGates() {
         Scanner scanner = new Scanner(System.in);
-        if (getFirstTimeInSilverhelm() == 1) {
+        if (triggers.getSilverhelmFirstTime() == 1) {
             System.out.println("-------------------------");
             System.out.println("""
-                    You arrive at the gates of the capital of Goldgate - Silverhelm.
-                    The signpost at the entrance says:  'Swiftpass - East'
-                                                        'Coldstar - South'
-                                                        'Westshell - West'
-                    """);
+                    You arrive at the gates of the capital of Goldgate - Silverhelm.""");
             System.out.println("-------------------------");
         } else {
             System.out.println("-------------------------");
@@ -290,9 +394,11 @@ public class Zones {
                     You arrive at the gates of Silverhelm. You notice the structure of the city.
                     The walls are tall and pointy, almost cutting through the clouds. The gates
                     are colossal, wondering how do people constructed it let alone open it.
-                    """);
+                    The signpost at the entrance says:  'Swiftpass - East'
+                                                        'Coldstar - South'
+                                                        'Westshell - West'""");
             System.out.println("-------------------------");
-            setFirstTimeInSilverhelm(1);
+            triggers.setSilverhelmFirstTime(1);
         }
         System.out.println("""
                 1. *Enter Silverhelm*
@@ -303,7 +409,7 @@ public class Zones {
                 6. *Head West to Westshell*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
+        switch (choice) {
             case ("1"):
                 Silverhelm();
                 break;
@@ -313,10 +419,10 @@ public class Zones {
             case ("3"):
                 ColdstarGates();
                 break;
-            case("4"):
+            case ("4"):
                 OakenpassGates();
                 break;
-            case("5"):
+            case ("5"):
                 PristinePond();
                 break;
             case ("6"):
@@ -347,14 +453,14 @@ public class Zones {
                 6. *Head West to Silverhelm*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
+        switch (choice) {
             case ("1"):
                 Swiftpass();
                 break;
             case ("2"):
                 FairlightGates();
                 break;
-            case("3"):
+            case ("3"):
                 AshalThaloreRuins();
                 break;
             case ("4"):
@@ -363,7 +469,7 @@ public class Zones {
             case ("5"):
                 SilkfrontGates();
                 break;
-            case("6"):
+            case ("6"):
                 SilverhelmGates();
                 break;
         }
@@ -379,23 +485,23 @@ public class Zones {
         System.out.println("You arrived at the gates of Coldstar");
         System.out.println("-------------------------");
         System.out.println("""
-                1. *Enter Coldstar* 
+                1. *Enter Coldstar*
                 2. *Head North to Silverhelm*
                 3. *Head North to Swiftpass*
                 4. *Head South to Silkfront*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
-            case("1"):
+        switch (choice) {
+            case ("1"):
                 Coldstar();
                 break;
-            case("2"):
+            case ("2"):
                 SilverhelmGates();
                 break;
-            case("3"):
+            case ("3"):
                 SwiftpassGates();
                 break;
-            case("4"):
+            case ("4"):
                 SilkfrontGates();
                 break;
         }
@@ -416,7 +522,7 @@ public class Zones {
                 3. *Head North to Silverhelm*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
+        switch (choice) {
             case ("1"):
                 Oakenpass();
                 break;
@@ -444,7 +550,7 @@ public class Zones {
                 3. *Head North to Swiftpass*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
+        switch (choice) {
             case ("1"):
                 Silkfront();
                 break;
@@ -474,20 +580,20 @@ public class Zones {
                 5. *Head West to Mistwall*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
-            case("1"):
+        switch (choice) {
+            case ("1"):
                 Fairlight();
                 break;
-            case("2"):
+            case ("2"):
                 AshalThaloreRuins();
                 break;
-            case("3"):
+            case ("3"):
                 SwiftpassGates();
                 break;
-            case("4"):
+            case ("4"):
                 MoldyGrove();
                 break;
-            case("5"):
+            case ("5"):
                 MistwallGates();
                 break;
         }
@@ -508,7 +614,7 @@ public class Zones {
                 3. *Head East to Fairlight*
                 """);
         String choice = scanner.nextLine();
-        switch (choice){
+        switch (choice) {
             case ("1"):
                 Mistwall();
                 break;
