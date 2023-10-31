@@ -1,28 +1,39 @@
 package SimpleTextAdventureGame;
 
 public class Triggers {
+
     ///Westshell
     private int WestshellTavernFirstTime = 0;
+
     ///Silverhelm
     private int SilverhelmFirstTime = 0;
     private int SilverhelmTavernFirstTime = 0;
     private int SilverhelmCastleFirstTime = 0;
+
     ///Swiftpass
     private int SwiftpassFirstTime = 0;
+
     ///Coldstar
     private int ColdstarFirstTime = 0;
+
     ///Oakenpass
     private int OakenpassFirstTime = 0;
+
     ///Silkfront
     private int SilkfrontFirstTime = 0;
+
     ///Fairlight
     private int FairlightFirstTime = 0;
+
     ///Mistwall
     private int MistwallFirstTime = 0;
+
     ///Moldy Groove
     private int MoldyGrooveFirstTime = 0;
+
     ///Pristine Pond
     private int PristinePondFirstTime = 0;
+
     ///Ashal'Thalore Ruins
     private int AshalThaloreRuinsFirstTime = 0;
     ///

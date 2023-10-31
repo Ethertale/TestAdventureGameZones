@@ -41,7 +41,7 @@ public class Zones extends Player{
 
         }
     }
-
+////TODO Westshell to be expanded
     public void WestshellTavern() {
         Scanner scanner = new Scanner(System.in);
 
@@ -78,51 +78,53 @@ public class Zones extends Player{
                         WestshellTavern();
                         break;
                     case ("2"):
-                        //TODO Fix Unrecognized Choice Leaving The Loop
-
                         System.out.println("-------------------------");
                         System.out.println("'That'll cost you 10 gold adventurer.'");
                         System.out.println("1. *Pay 10 gold*");
                         System.out.println("2. *Leave*");
                         choice = scanner.nextLine();
                         if (getPlayerGold() >= 10){
-                            if (!choice.equals("1") && !choice.equals("2")){
-                                System.out.println("---Unrecognized Choice---");
-                                choice = scanner.nextLine();
-                            }else {
-                                switch (choice){
-                                    case ("1"):
-                                        System.out.println("-------------------------");
-                                        System.out.println("""
-                                                Durgstenbof shows you the way up to the bedrooms. You enter your room,
-                                                the air is clean, the sheets are clean and you lay down. Soon you feel
-                                                your eyelids heavier and heavier. Before you realise you were already asleep.""");
-                                        setPlayerCurrentHP(getPlayerMaxHP());
-                                        setPlayerGold(getPlayerGold() - 10);
-                                        System.out.printf("HP Restored: %d/%d\n", getPlayerCurrentHP(), getPlayerMaxHP());
-                                        System.out.printf("Remaining Gold: %d\n", getPlayerGold());
-                                        WestshellTavern();
-                                        break;
-                                    case("2"):
-                                        WestshellTavern();
-                                        break;
+                            while (true) {
+                                if (!choice.equals("1") && !choice.equals("2")) {
+                                    System.out.println("---Unrecognized Choice---");
+                                    choice = scanner.nextLine();
+                                } else {
+                                    switch (choice) {
+                                        case ("1"):
+                                            System.out.println("-------------------------");
+                                            System.out.println("""
+                                                    Durgstenbof shows you the way up to the bedrooms. You enter your room,
+                                                    the air and the sheets are clean. You lay down. Soon you feel
+                                                    your eyelids heavier and heavier. Before you realise you were already asleep.""");
+                                            setPlayerCurrentHP(getPlayerMaxHP());
+                                            setPlayerGold(getPlayerGold() - 10);
+                                            System.out.printf("HP Restored: %d/%d\n", getPlayerCurrentHP(), getPlayerMaxHP());
+                                            System.out.printf("Remaining Gold: %d\n", getPlayerGold());
+                                            WestshellTavern();
+                                            break;
+                                        case ("2"):
+                                            WestshellTavern();
+                                            break;
+                                    }
                                 }
                             }
                         }else {
-                            if (!choice.equals("1") && !choice.equals("2")){
-                                System.out.println("---Unrecognized Choice---");
-                                choice = scanner.nextLine();
-                            }else {
-                                switch (choice){
-                                    case("1"):
-                                        System.out.println("-------------------------");
-                                        System.out.println("'You don't have enough gold friend.'");
-                                        System.out.println("-------------------------");
-                                        WestshellTavern();
-                                        break;
-                                    case("2"):
-                                        WestshellTavern();
-                                        break;
+                            while (true) {
+                                if (!choice.equals("1") && !choice.equals("2")) {
+                                    System.out.println("---Unrecognized Choice---");
+                                    choice = scanner.nextLine();
+                                } else {
+                                    switch (choice) {
+                                        case ("1"):
+                                            System.out.println("-------------------------");
+                                            System.out.println("'You don't have enough gold friend.'");
+                                            System.out.println("-------------------------");
+                                            WestshellTavern();
+                                            break;
+                                        case ("2"):
+                                            WestshellTavern();
+                                            break;
+                                    }
                                 }
                             }
                         }
@@ -131,10 +133,9 @@ public class Zones extends Player{
                         break;
                 }
             }
-
         }
     }
-
+////TODO WestshellTavern to be expanded
     public void WestshellGuardDialogue() {
         Scanner scanner = new Scanner(System.in);
 
@@ -230,7 +231,7 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO WestshellGuardDialogue to be expanded
     public void WestshellOutside() {
         Scanner scanner = new Scanner(System.in);
         if (quests.getQuestWispsRunningRampant() == 2) {
@@ -271,7 +272,7 @@ public class Zones extends Player{
         }
 
     }
-
+////TODO WestshellOutside to be expanded
     public void WestshellBeach() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -294,7 +295,7 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO WestshellBeach to be expanded
     public void MistyForest() {
         Scanner scanner = new Scanner(System.in);
         if (quests.getQuestWispsRunningRampant() == 0) {
@@ -368,7 +369,7 @@ public class Zones extends Player{
 
 
     }
-
+////FIXME MistyForest to be scripted along with the interiors
     public void MistyForestInterior1() {
 
     }
@@ -380,7 +381,7 @@ public class Zones extends Player{
     public void MistyForestInterior3() {
 
     }
-
+/////////////////////////////////////////////////////////////
     public void SilverhelmGates() {
         Scanner scanner = new Scanner(System.in);
         if (triggers.getSilverhelmFirstTime() == 1) {
@@ -432,13 +433,13 @@ public class Zones extends Player{
 
 
     }
-
+////FIXME SilverhelmGates to rewrite
     public void Silverhelm() {
         //TODO Script a guard that knows the guard from Westshell
         System.out.println("-------------------------");
         System.out.println("-------------------------");
     }
-
+////TODO Silverhelm Not scripted
     public void SwiftpassGates() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -474,11 +475,11 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO SwiftpassGates Not scripted
     public void Swiftpass() {
 
     }
-
+////TODO Swiftpass Not scripted
     public void ColdstarGates() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -506,11 +507,11 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO ColdstarGates Not scripted
     public void Coldstar() {
 
     }
-
+////TODO Coldstar Not scripted
     public void OakenpassGates() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -534,11 +535,11 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO OakenpassGates Not scripted
     public void Oakenpass() {
 
     }
-
+////TODO Oakenpass Not scripted
     public void SilkfrontGates() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -562,11 +563,11 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO SilkfrontGates Not scripted
     public void Silkfront() {
 
     }
-
+////TODO Silkfront Not scripted
     public void FairlightGates() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -598,11 +599,11 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO FairlightGates Not scripted
     public void Fairlight() {
 
     }
-
+////TODO Fairlight Not scripted
     public void MistwallGates() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("-------------------------");
@@ -626,19 +627,21 @@ public class Zones extends Player{
                 break;
         }
     }
-
+////TODO MistwallGates Not scripted
     public void Mistwall() {
 
     }
-
+////TODO Mistwall Not scripted
     public void MoldyGrove() {
 
     }
-
+////TODO MoldyGrove Not scripted
     public void PristinePond() {
 
     }
-
+////TODO PristinePond Not scripted
     public void AshalThaloreRuins() {
     }
+////TODO AshalThaloreRuins Not scripted
+
 }
